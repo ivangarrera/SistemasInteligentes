@@ -6,7 +6,7 @@ class Terrain:
         self.__y_tractor = y_tractor
         self.__k = k
         self.__max = max
-        self.__terrain_representation = [[[] for i in range(self.__rows)] for i in range(self.__cols)]
+        self.__terrain_representation = [[[] for i in range(int(self.__rows))] for i in range(int(self.__cols))]
 
     def generate_terrain(self):
         return self.__terrain_representation
