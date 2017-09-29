@@ -10,3 +10,12 @@ class Terrain:
 
     def generate_terrain(self):
         return self.__terrain_representation
+
+    def get_xTractor(self):
+        return int(self.__x_tractor)
+
+    def get_yTractor(self):
+        return int(self.__y_tractor)
+
+    def get_GroundDesired(self):
+        return int(self.__k)
