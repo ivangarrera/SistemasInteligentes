@@ -19,3 +19,9 @@ class Terrain:
 
     def get_GroundDesired(self):
         return int(self.__k)
+
+    def set_xTractor(self, position):
+        self.__x_tractor = position
+
+    def set_yTractor(self, position):
+        self.__y_tractor = position

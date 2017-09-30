@@ -1,4 +1,5 @@
 import Terrain
+import random
 
 movements = ["UP", "DOWN", "RIGHT", "LEFT"]
 
@@ -30,7 +31,7 @@ class Gui:
         string = ""
         for i in range(len(terrain)):
             for j in range(len(terrain[i])):
-                string += terrain[i][j] + " "
+                string += str(terrain[i][j]) + " "
             string += "\n"
         print(string)
 
@@ -55,7 +56,7 @@ class Gui:
         return possible
 
     def quantity_ground_to_transfer(self, terrain, tractor_x, tractor_y, ground_desired_in_cell):
-        ground_excess = int(terrain[tractor_y][tractor_x]) - ground_desired_in_cell
+        ground_excess = int(terrain[tractor_x][tractor_y]) - ground_desired_in_cell
         if ground_excess < 0:
             ground_excess = 0
         return ground_excess
@@ -105,26 +106,72 @@ class Gui:
 
     def cartesian_prod_between_combinations_and_movements(self, possible_movements, combinations):
         cartesian = []
-        if len(combinations) > 0:
+        if len(combinations) > 0:   # There is ground to transfer
             for movement in possible_movements:
                 for combination in combinations:
                     cartesian.append((movement, combination))
-        else:
+        else:   # There isn't ground to transfer
             for movement in possible_movements:
-                cartesian.append((movement, 0))
+                cartesian.append((movement, [0]))
         return cartesian
+
+    def choose_one_action(self, possible_actions):
+        index = random.randint(0, len(possible_actions) - 1)
+        return possible_actions[index]
+
+    def algorithm_is_applicable(self, terrain, ground_desired):
+        applicable = True
+        for row in terrain:
+            for square in row:
+                if square != ground_desired:
+                    applicable = False
+        return applicable
+
+
+    def algorithm(self, terrain, terrain_obj):
+        ground_desired = terrain_obj.get_GroundDesired()
+        # If the ground is not equal in all squares.
+        while not self.algorithm_is_applicable(terrain, ground_desired):
+
+            x_tractor = terrain_obj.get_xTractor()
+            y_tractor = terrain_obj.get_yTractor()
+            self.print_terrain(terrain)
+            print("Tractor is in {}".format((x_tractor, y_tractor)))
+            current_combination = []
+            combinations = []
+
+            # Get all possible actions the tractor can do
+            possible_movements = self.get_all_movement_possibles(terrain, x_tractor, y_tractor)
+            ground_to_transfer = self.quantity_ground_to_transfer(terrain, x_tractor, y_tractor, ground_desired)
+            self.get_combinations_of_ground(ground_to_transfer, len(possible_movements), current_combination, combinations, 0)
+            possible_actions = self.cartesian_prod_between_combinations_and_movements(possible_movements, combinations)
+
+            # Choose a random option and do it
+            action_to_do = self.choose_one_action(possible_actions)
+            new_position, ground_combination = action_to_do[0], action_to_do[1]
+            print("Tractor will move to: {}\nGround combination is: \n".format(new_position, ground_combination))
+
+            if len(possible_movements) == len(ground_combination):
+                # Move the tractor to its new position
+                terrain_obj.set_xTractor(new_position[0])
+                terrain_obj.set_yTractor(new_position[1])
+                # Update values of ground in the terrain
+                for index in range(len(ground_combination)):
+                    x_new, y_new = possible_movements[index][0], possible_movements[index][1]
+                    print("{}->{}\n".format((x_new, y_new), ground_combination[index]))
+                    terrain[x_tractor][y_tractor] = ground_desired
+                    terrain[x_new][y_new] = int(terrain[x_new][y_new]) + ground_combination[index]
+                print("\n\n\n")
+            else: # There isn't ground to transfer
+                print("{}->{}\n\n\n".format((new_position[0], new_position[1]), ground_to_transfer))
+                terrain_obj.set_xTractor(new_position[0])
+                terrain_obj.set_yTractor(new_position[1])
+        # Print the terrain final state
+        self.print_terrain(terrain)
 
 def main():
     gui = Gui()
     terrain, terrain_obj = gui.read_file()
-    gui.print_terrain(terrain)
-
-    possible = gui.get_all_movement_possibles(terrain, terrain_obj.get_xTractor(), terrain_obj.get_yTractor())
-    current_combination = []
-    combinations = []
-    gui.get_combinations_of_ground(gui.quantity_ground_to_transfer(terrain, terrain_obj.get_xTractor(), terrain_obj.get_yTractor(),
-                                                                   terrain_obj.get_GroundDesired()), len(possible),
-                                   current_combination, combinations, 0)
-    print(gui.cartesian_prod_between_combinations_and_movements(possible, combinations))
+    gui.algorithm(terrain, terrain_obj)
 
 main()
