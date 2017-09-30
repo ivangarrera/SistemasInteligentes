@@ -120,17 +120,18 @@ class Gui:
         return possible_actions[index]
 
     def algorithm_is_applicable(self, terrain, ground_desired):
-        applicable = True
+        applicable = False
         for row in terrain:
             for square in row:
                 if square != ground_desired:
-                    applicable = False
+                    applicable = True
         return applicable
 
     def algorithm(self, terrain, terrain_obj):
         ground_desired = terrain_obj.get_GroundDesired()
+        solving_steps = []
         # If the ground is not equal in all squares.
-        while not self.algorithm_is_applicable(terrain, ground_desired):
+        while self.algorithm_is_applicable(terrain, ground_desired):
 
             x_tractor = terrain_obj.get_xTractor()
             y_tractor = terrain_obj.get_yTractor()
@@ -138,6 +139,7 @@ class Gui:
             print("Tractor is in {}".format((x_tractor, y_tractor)))
             current_combination = []
             combinations = []
+            step = ""
 
             # Get all possible actions the tractor can do
             possible_movements = self.get_all_movement_possibles(terrain, x_tractor, y_tractor)
@@ -148,7 +150,8 @@ class Gui:
             # Choose a random option and do it
             action_to_do = self.choose_one_action(possible_actions)
             new_position, ground_combination = action_to_do[0], action_to_do[1]
-            print("Tractor will move to: {}\nGround combination is: \n".format(new_position, ground_combination))
+            print("Tractor will move to: {}\nGround combination is:".format(new_position, ground_combination))
+            step += "{}, [".format(new_position)
 
             if len(possible_movements) == len(ground_combination):
                 # Move the tractor to its new position
@@ -157,20 +160,31 @@ class Gui:
                 # Update values of ground in the terrain
                 for index in range(len(ground_combination)):
                     x_new, y_new = possible_movements[index][0], possible_movements[index][1]
-                    print("{}->{}\n".format((x_new, y_new), ground_combination[index]))
+                    print("{}->{}".format((x_new, y_new), ground_combination[index]))
+                    step += "({}, {}), ".format(ground_combination[index], (x_new, y_new))
                     terrain[x_tractor][y_tractor] = ground_desired
                     terrain[x_new][y_new] = int(terrain[x_new][y_new]) + ground_combination[index]
                 print("\n\n\n")
+                step += "]"
             else: # There isn't ground to transfer
                 print("{}->{}\n\n\n".format((new_position[0], new_position[1]), ground_to_transfer))
+                step += "({}, {})]".format(ground_to_transfer, (new_position[0], new_position[1]))
                 terrain_obj.set_xTractor(new_position[0])
                 terrain_obj.set_yTractor(new_position[1])
+            solving_steps.append(step)
         # Print the terrain final state
         self.print_terrain(terrain)
+        return solving_steps
 
 def main():
     gui = Gui()
     terrain, terrain_obj = gui.read_file()
-    gui.algorithm(terrain, terrain_obj)
+    solving_steps = gui.algorithm(terrain, terrain_obj)
+    try:
+        with open("./solution.txt", 'w') as f:
+            for step in solving_steps:
+                f.write(step+"\n")
+    except Exception as ex:
+        print(ex.__str__())
 
 main()
