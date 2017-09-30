@@ -127,7 +127,6 @@ class Gui:
                     applicable = False
         return applicable
 
-
     def algorithm(self, terrain, terrain_obj):
         ground_desired = terrain_obj.get_GroundDesired()
         # If the ground is not equal in all squares.
