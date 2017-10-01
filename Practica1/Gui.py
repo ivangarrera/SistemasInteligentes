@@ -15,7 +15,7 @@ class Gui:
                 config = file[0].split(" ")
                 tractor_x, tractor_y, k, maximum, col, row = config[0], config[1], config[2], config[3], config[4], config[5]
                 # Create the terrain
-                terrain_obj = Terrain.Terrain(row, col, tractor_x, tractor_y, k, max)
+                terrain_obj = Terrain.Terrain(row, col, tractor_x, tractor_y, k, maximum)
                 terrain = terrain_obj.generate_terrain()
                 # Fill the terrain with values
                 for i in range(int(row)):
