@@ -70,7 +70,8 @@ class State:
             sum += combinations[value][0]
         if len(combinations) == num_possible_movements and sum < self.max:
             for combination in combinations: # The ground mustn't be greater than maximum
-                if int(self.terrain_representation[combination[1][0]][combination[1][1]]) + sum > self.max \
+                if int(self.terrain_representation[combination[1][0]][combination[1][1]]) + \
+                        combination[0] > self.max \
                         and combination[0] != 0:
                     return False
             if sum != ground_to_transfer:
@@ -137,6 +138,7 @@ class State:
         return suc
 
     def get_successors_info(self, successors):
+        print("Length of successors: {}".format(len(successors)))
         print("Original terrain: ")
         self.print_terrain()
         for successor in successors:
@@ -146,7 +148,7 @@ class State:
 
     def read_file(self):
         try:
-            with open("./terrain.txt") as f:
+            with open("./terrain_test.txt") as f:
                 file = f.read().splitlines()
                 # Read configuration controls
                 config = file[0].split(" ")
