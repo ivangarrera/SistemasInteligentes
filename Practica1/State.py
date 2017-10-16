@@ -30,6 +30,13 @@ class State:
             string += "\n"
         print(string)
 
+    def __get_terrain_str(self):
+        string = ""
+        for i in range(len(self.terrain_representation)):
+            for j in range(len(self.terrain_representation[i])):
+                string += str(self.terrain_representation[i][j])
+        return string
+
     def is_possible_movement(self, movement):
         possible = False
         if movement == 'RIGHT':
@@ -81,7 +88,10 @@ class State:
             return True
         return False
 
+    def __str__(self):
+        return str(self.cols)+str(self.rows)+str(self.x_tractor)+str(self.y_tractor)+str(self.k)+\
+            str(self.max)+self.__get_terrain_str()
 
-
+    __repr__ = __str__
 
 

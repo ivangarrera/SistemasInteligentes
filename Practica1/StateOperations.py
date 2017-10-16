@@ -1,11 +1,11 @@
 import State
 from copy import deepcopy
+import hashlib
 
 
 class StateOperations:
     def __init__(self, terrain):
         self.terrain = terrain
-        self.__init__ = True
 
     # Backtracking to get all the combinations
     def __get_combinations_of_ground(self, possible_movements, ground_to_transfer, num_possible_movements,
@@ -70,3 +70,6 @@ class StateOperations:
             print("New Terrain: ")
             successor[1].print_terrain()
             print("Applied action:\n{}\nWith a cost: {}".format(successor[0], successor[2]))
+
+    def get_unique_representation(self):
+        return hashlib.sha512(str(self.terrain).encode()).hexdigest()
