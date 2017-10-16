@@ -22,6 +22,8 @@ class State:
         if terrain_representation != 0:
             self.terrain_representation = terrain_representation
 
+
+
     def print_terrain(self):
         string = ""
         for i in range(len(self.terrain_representation)):
@@ -29,6 +31,12 @@ class State:
                 string += str(self.terrain_representation[i][j]) + " "
             string += "\n"
         print(string)
+
+    def get_position_tractor(self):
+        position = []
+        position.append(self.x_tractor)
+        position.append(self.y_tractor)
+        return position
 
     def __get_terrain_str(self):
         string = ""

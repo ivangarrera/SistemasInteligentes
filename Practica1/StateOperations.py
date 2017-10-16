@@ -60,6 +60,7 @@ class StateOperations:
                     terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + new_excess
             s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, terrain)
             suc.append((action, s, cost))
+        print("Sucesores"+str(suc))
         return suc
 
     def get_successors_info(self, successors):
