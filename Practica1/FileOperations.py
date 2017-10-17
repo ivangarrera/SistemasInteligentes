@@ -5,7 +5,7 @@ class FileOperations:
 
     def read_file(self, state):
         try:
-            with open("./terrain_test.txt") as f:
+            with open("./terrain.txt") as f:
                 file = f.read().splitlines()
                 # Read configuration controls
                 config = file[0].split(" ")
