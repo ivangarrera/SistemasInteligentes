@@ -1,8 +1,7 @@
 import FileOperations
 import State
 import StateOperations
-import Nodo
-import NodoOperations
+
 
 def main():
     operations = FileOperations.FileOperations()
@@ -12,8 +11,7 @@ def main():
     successors = state_operations.get_successors()
     state_operations.get_successors_info(successors)
     operations.write_file(successors)
-    nodoOperations = NodoOperations.NodoOperations(terrain, successors)
-    nodoOperations.cargar()
     print(state_operations.get_unique_representation())
+
 if __name__=="__main__":
     main()

@@ -1,9 +1,10 @@
-class Nodo:
-    def __init__(self, terrain, cost, action, value):
+class Node:
+    def __init__(self, terrain, cost, action, value, parent):
         self.__terrain = terrain
         self.__cost = cost
         self.__action = action
         self.__value = value
+        self.__parent = parent
 
     def get_terrain(self):
         return self.__terrain
@@ -16,3 +17,6 @@ class Nodo:
 
     def get_value(self):
         return self.__value
+
+    def get_parent(self):
+        return self.__parent
