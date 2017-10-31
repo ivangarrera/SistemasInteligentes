@@ -1,11 +1,11 @@
 
 class FileOperations:
-    def __init__(self):
-        self.init = True
+    def __init__(self, path):
+        self.path = path
 
     def read_file(self, state):
         try:
-            with open("./terrain.txt") as f:
+            with open(self.path) as f:
                 file = f.read().splitlines()
                 # Read configuration controls
                 config = file[0].split(" ")
