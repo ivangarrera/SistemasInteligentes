@@ -1,7 +1,6 @@
 import unittest
-
 import sys
-sys.path.insert(0, "/home/ivangarrera/PycharmProjects/SistemasInteligentes/Practica1/src")
+sys.path.insert(0, "../src")
 
 from FileOperations import FileOperations
 from State import State
@@ -9,8 +8,8 @@ from StateOperations import StateOperations
 
 
 class State_Testing(unittest.TestCase):
-    terrain = State(0, 0, 0, 0, 0, 0, 0)
     operations = FileOperations("../terrain.txt")
+    terrain = State(0, 0, 0, 0, 0, 0, 0)
     operations.read_file(terrain)
     state_operations = StateOperations(terrain)
 
@@ -40,8 +39,8 @@ class State_Testing(unittest.TestCase):
     def test_quantity_ground_to_transfer(self):
         self.assertGreater(self.terrain.quantity_ground_to_transfer(), 0)
 
-def main():
-    unittest.main()
+    def test_hash_format(self):
+        self.assertEqual(len(self.state_operations.get_unique_representation()), 128)
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
