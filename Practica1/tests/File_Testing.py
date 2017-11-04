@@ -12,5 +12,8 @@ class File_Testing(unittest.TestCase):
     def test_correct_format_path(self):
         self.assertIsInstance(self.fileoperations.path, str)
 
+    def test_file_correct(self):
+        self.assertTrue(self.fileoperations.file_format_correct())
+
 if __name__ == '__main__':
     unittest.main()

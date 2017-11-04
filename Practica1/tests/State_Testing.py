@@ -26,6 +26,21 @@ class State_Testing(unittest.TestCase):
         not self.assertGreater( self.terrain.rows, self.terrain.x_tractor)
         not self.assertGreater(self.terrain.cols, self.terrain.y_tractor)
 
+    def test_instance_cols_rows(self):
+        self.assertIsInstance(self.terrain.rows, int)
+        self.assertIsInstance(self.terrain.cols, int)
+
+    def test_instance_max_groundDesired(self):
+        self.assertIsInstance(self.terrain.k, int)
+        self.assertIsInstance(self.terrain.max, int)
+
+    def test_instance_tractor_position(self):
+        self.assertIsInstance(self.terrain.x_tractor, int)
+        self.assertIsInstance(self.terrain.y_tractor, int)
+
+    def test_instance_terrainRepresentation(self):
+        self.assertIsInstance(self.terrain.terrain_representation, list)
+
     def test_tractor_position_is_tuple(self):
         self.assertEqual(len(self.terrain.get_position_tractor()), 2)
 
@@ -38,6 +53,9 @@ class State_Testing(unittest.TestCase):
 
     def test_quantity_ground_to_transfer(self):
         self.assertGreater(self.terrain.quantity_ground_to_transfer(), 0)
+
+    def test_stateOperation_instance(self):
+        self.assertIsInstance(self.state_operations.terrain, State)
 
     def test_hash_format(self):
         self.assertEqual(len(self.state_operations.get_unique_representation()), 128)
