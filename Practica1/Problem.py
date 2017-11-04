@@ -1,6 +1,11 @@
 import random
+import State
+import StateOperations
 
 class Problem:
+
+    terrain = State.State(0, 0, 0, 0, 0, 0, 0)
+    spaceState = StateOperations.StateOperations(terrain)
 
     def __init__(self, increase, depth_max, path):
         self.increase = increase
@@ -36,7 +41,7 @@ class Problem:
         te = input('¿ De cuanto quieres el terreno?(ZxZ)')
         tr = input('¿Donde quieres que se coloque el tractor?(ZxZ)')
         k = input('¿Que valor quieres que sea el ideal para cada celda?')
-        max = input('Cual quieres que sea el valor maximo de cada celda?')
+        maximum = input('Cual quieres que sea el valor maximo de cada celda?')
 
         # Create the terrain
         state.cols = int(te[2])
@@ -44,13 +49,13 @@ class Problem:
         state.x_tractor = int(tr[0])
         state.y_tractor = int(tr[2])
         state.k = int(k)
-        state.max = int(max)
+        state.max = int(maximum)
 
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(int(state.cols))] for j in range(int(state.rows))]
         for i in range(int(te[2])):
             for j in range(int(te[0])):
-                ran = str(random.randint(0, int(max)))
+                ran = str(random.randint(0, int(maximum)))
                 state.terrain_representation[i][j] = ran
 
     def read_file(self, state):

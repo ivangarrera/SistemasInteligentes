@@ -1,12 +1,11 @@
-import FileOperations
 import State
 import StateOperations
 import Problem
 
 
 def main():
-    operations = Problem.Problem(0, 0, "./terrain.txt")
     terrain = State.State(0, 0, 0, 0, 0, 0, 0)
+    operations = Problem.Problem(0, 0, "./terrain.txt")
     operations.choose_option(terrain)
     state_operations = StateOperations.StateOperations(terrain)
     successors = state_operations.get_successors()
