@@ -1,5 +1,5 @@
 import Node
-
+import heapq
 
 class Border:
     def __init__(self):
@@ -7,12 +7,13 @@ class Border:
 
     def InsertNode(self, node):
         i=0
-        while i<len(self.__queue) and node.get_value()<self.__queue[i].get_value():
-            i+=1
-        self.__queue.insert(i,node)
+        heapq.heappush(self.__queue, (node.get_value(), node))
 
     def Delete(self):
-        return self.__queue.pop(0)
+        return heapq.heappop(self.__queue)[1]
 
     def IsEmpty(self):
         return len(self.__queue)==0
+
+
+
