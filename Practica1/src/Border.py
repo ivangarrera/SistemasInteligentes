@@ -1,6 +1,3 @@
-import Node
-
-
 class Border:
     def __init__(self):
         self.__queue=[]
