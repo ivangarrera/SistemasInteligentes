@@ -2,14 +2,14 @@ import unittest
 import sys
 sys.path.insert(0, "../src")
 
-from FileOperations import FileOperations
+from Problem import Problem
 from State import State
 from StateOperations import StateOperations
 
 
 class State_Testing(unittest.TestCase):
-    operations = FileOperations("../terrain.txt")
     terrain = State(0, 0, 0, 0, 0, 0, 0)
+    operations = Problem(0, 0, "../terrain.txt", terrain)
     operations.read_file(terrain)
     state_operations = StateOperations(terrain)
 
