@@ -15,13 +15,13 @@ class Node_Testing(unittest.TestCase):
                      2, ((1, 2), [0]), 10, None))
 
     def test_if_correct(self):
-        self.assertEqual(len(self.node.get_terrain()), 128)
+        self.assertEqual(len(self.node.get_state()), 128)
         self.assertGreater(self.node.get_cost(), 0)
         self.assertIsInstance(self.node.get_action(), tuple)
         self.assertIsInstance(self.node.get_parent(), Node)
 
     def test_nodes_not_equal(self):
-        self.assertNotEqual(self.node.get_terrain(), self.node.get_parent().get_terrain())
+        self.assertNotEqual(self.node.get_state(), self.node.get_parent().get_state())
 
 
 if __name__ == '__main__':

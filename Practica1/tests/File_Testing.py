@@ -3,11 +3,13 @@ import sys
 
 sys.path.insert(0, "../src")
 
-from FileOperations import FileOperations
+from Problem import Problem
+from State import State
 
 
 class File_Testing(unittest.TestCase):
-    fileoperations = FileOperations("../terrain.txt")
+    state = State(0, 0, 0, 0, 0, 0, 0)
+    fileoperations = Problem(0, 0, "../terrain.txt", state)
 
     def test_correct_format_path(self):
         self.assertIsInstance(self.fileoperations.path, str)

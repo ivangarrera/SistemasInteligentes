@@ -2,5 +2,5 @@
 
 cd tests
 nosetests3 *
-cd ../src
-python3 main.py
+#cd ../src
+#python3 main.py
