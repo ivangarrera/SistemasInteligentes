@@ -23,7 +23,6 @@ class State:
             self.terrain_representation = terrain_representation
 
 
-
     def print_terrain(self):
         string = ""
         for i in range(len(self.terrain_representation)):

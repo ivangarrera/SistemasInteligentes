@@ -6,7 +6,6 @@ class Border:
         self.__queue=[]
 
     def InsertNode(self, node):
-        i=0
         heapq.heappush(self.__queue, (node.get_value(), node))
 
     def Delete(self):

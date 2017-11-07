@@ -1,6 +1,7 @@
-import State
-from copy import deepcopy
 import hashlib
+from copy import deepcopy
+
+import State
 
 
 class StateOperations:
