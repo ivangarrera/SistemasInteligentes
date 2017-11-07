@@ -1,13 +1,13 @@
 class Node:
-    def __init__(self, terrain, cost, action, value, parent):
-        self.__terrain = terrain
+    def __init__(self, state, cost, action, value, parent):
+        self.__state = state
         self.__cost = cost
         self.__action = action
         self.__value = value
         self.__parent = parent
 
-    def get_terrain(self):
-        return self.__terrain
+    def get_state(self):
+        return self.__state
 
     def get_cost(self):
         return self.__cost

@@ -4,13 +4,16 @@ import StateOperations
 
 class Problem:
 
-    terrain = State.State(0, 0, 0, 0, 0, 0, 0)
-    spaceState = StateOperations.StateOperations(terrain)
 
-    def __init__(self, increase, depth_max, path):
+
+
+    def __init__(self, increase, depth_max, path, state):
         self.increase = increase
         self.depth_max = depth_max
         self.path = path
+        self.state = state
+        self.spaceState = StateOperations.StateOperations(self.state)
+
 
     def get_Increase(self):
         return self.increase
@@ -24,17 +27,17 @@ class Problem:
     def set_DepthMax(self, depth_max):
         self.depth_max = depth_max
 
-    def choose_option(self, state):
+    def choose_option(self):
         while True:
-            choice = input('¿Quieres cargar la información desde un fichero o adecuarlo a tus parametros?(1-Fichero,2-Parametros)')
+            choice = input('From where do you want to load the data?\n1.- From file.\n2.- Random generated.\n')
             if choice == '1':
-                self.read_file(state)
+                self.read_file(self.state)
                 break
             elif choice == '2':
-                self.generate_terrain(state)
+                self.generate_terrain(self.state)
                 break
             else:
-                print("'"+choice+"' no pertenece a las opciones, pruebe otra vez")
+                print("'"+choice+"' is not a valid option. Please, try again.")
 
 
     def generate_terrain(self, state):
