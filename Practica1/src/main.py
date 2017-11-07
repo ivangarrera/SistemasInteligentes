@@ -1,13 +1,14 @@
 from sys import exit
 
-import FileOperations
+import Problem
 import State
 import StateOperations
 
 
 def main():
-    operations = FileOperations.FileOperations("../terrain.txt")
     terrain = State.State(0, 0, 0, 0, 0, 0, 0)
+    operations = Problem.Problem(0, 0, "../terrain.txt", terrain)
+
     if operations.file_format_correct():
         operations.read_file(terrain)
         state_operations = StateOperations.StateOperations(terrain)
