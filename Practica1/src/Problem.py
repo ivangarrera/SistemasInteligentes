@@ -121,7 +121,7 @@ class Problem:
                 # Fill the terrain with values
                 state.terrain_representation = [[[] for i in range(int(state.cols))] for i in range(int(state.rows))]
                 for i in range(int(row)):
-                    row_values = file[i + 1].split(" ")
+                    row_values = list(map(int, file[i + 1].split(" ")))
                     print(row_values)
                     state.terrain_representation[i] = row_values
                 state.print_terrain()
@@ -129,16 +129,12 @@ class Problem:
         except Exception as ex:
             print(ex.__str__())
 
-    def successors(self,successors):
-        list_successors = []
-        for i in successors:
-            list_successors.insert(i, str(successors))
-        return list_successors
+    def successors(self, state):
+        return StateOperations.StateOperations(state).get_successors()
 
 
-    def goal_state(self):
+    def goal_state(self, state):
         a = True
-        state = State.terrain_representation
         for i in range(int(state.rows)):
             for j in range(int(state.cols)):
                 if state.terrain_representation[i][j] != state.k:

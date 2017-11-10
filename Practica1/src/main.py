@@ -3,6 +3,7 @@ from sys import exit
 import Problem
 import State
 import StateOperations
+import Search_Algorithm
 
 
 def main():
@@ -10,9 +11,10 @@ def main():
     operations = Problem.Problem(0, 0, "../terrain.txt", terrain)
     operations.choose_option()
     state_operations = StateOperations.StateOperations(terrain)
-    successors = state_operations.get_successors()
-    state_operations.get_successors_info(successors)
-    operations.write_file(successors)
+    sol=Search_Algorithm.Search_Algorithm().search(operations, 'BFS', 7,7)
+    #successors = state_operations.get_successors()
+    #state_operations.get_successors_info(successors)
+    operations.write_file(sol)
     print(state_operations.get_unique_representation())
 
 

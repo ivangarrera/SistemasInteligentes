@@ -4,8 +4,8 @@ import Node
 
 class Search_Algorithm():
     def bounded_search(self, prob, strategy, max_depth):
-        b = Border()
-        initial_node = Node(prob.initial_state, 0, None, 0, None, 0)
+        b = Border.Border()
+        initial_node = Node.Node(prob.initial_state(), 0, None, 0, None, 0)
         b.InsertNode(initial_node)
         sol = False
         while not sol and not b.IsEmpty():
@@ -13,17 +13,18 @@ class Search_Algorithm():
             if prob.goal_state(actual_node.get_state()):
                 sol = True
             else:
-                sucessors_list = prob.sucessors(actual_node.get_state())
-                for sucessor in sucessors_list:
-                    n = actual_node.create_node(sucessor, actual_node, strategy, max_depth)
-                    b.InsertNode(n)
+                if actual_node.get_depth()<max_depth:
+                    successors_list = prob.successors(actual_node.get_state())
+                    for successor in successors_list:
+                        n = actual_node.create_node(successor, actual_node, strategy, max_depth)
+                        b.InsertNode(n)
         if sol:
             return self.create_solution(actual_node)
         else:
             return None
 
     def search(self, prob, strategy, max_depth, inc_depth):
-        if (strategy != 'IT'):
+        if (strategy != 'BFS'):
             inc_depth = max_depth
         actual_depth = inc_depth
         sol = None
@@ -37,4 +38,5 @@ class Search_Algorithm():
         while actual_node != None:
             action_list.append(actual_node.get_action())
             actual_node = actual_node.get_parent()
+        action_list.reverse()
         return action_list
