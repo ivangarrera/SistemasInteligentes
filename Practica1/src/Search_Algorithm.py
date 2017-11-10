@@ -39,4 +39,5 @@ class Search_Algorithm():
             action_list.append(actual_node.get_action())
             actual_node = actual_node.get_parent()
         action_list.reverse()
+        action_list.pop(0)
         return action_list
