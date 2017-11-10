@@ -3,22 +3,19 @@ from sys import exit
 import Problem
 import State
 import StateOperations
+import Search_Algorithm
 
 
 def main():
     terrain = State.State(0, 0, 0, 0, 0, 0, 0)
     operations = Problem.Problem(0, 0, "../terrain.txt", terrain)
-
-    if operations.file_format_correct():
-        operations.read_file(terrain)
-        state_operations = StateOperations.StateOperations(terrain)
-        successors = state_operations.get_successors()
-        state_operations.get_successors_info(successors)
-        operations.write_file(successors)
-        print(state_operations.get_unique_representation())
-    else:
-        print("File {} has not a valid format.".format(operations.path))
-        exit(1)
+    operations.choose_option()
+    state_operations = StateOperations.StateOperations(terrain)
+    sol=Search_Algorithm.Search_Algorithm().search(operations, 'BFS', 7,7)
+    #successors = state_operations.get_successors()
+    #state_operations.get_successors_info(successors)
+    operations.write_file(sol)
+    print(state_operations.get_unique_representation())
 
 
 

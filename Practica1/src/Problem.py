@@ -67,8 +67,12 @@ class Problem:
         while True:
             choice = input('From where do you want to load the data?\n1.- From file.\n2.- Random generated.\n')
             if choice == '1':
-                self.read_file(self.state)
-                break
+                if self.file_format_correct():
+                    self.read_file(self.state)
+                    break
+                else:
+                    print("File {} has not a valid format.".format(self.path))
+                    exit(1)
             elif choice == '2':
                 self.generate_terrain(self.state)
                 break
@@ -97,6 +101,7 @@ class Problem:
                 ran = str(random.randint(0, int(maximum)))
                 state.terrain_representation[i][j] = ran
 
+
     def read_file(self, state):
         try:
             with open(self.path) as f:
@@ -116,13 +121,28 @@ class Problem:
                 # Fill the terrain with values
                 state.terrain_representation = [[[] for i in range(int(state.cols))] for i in range(int(state.rows))]
                 for i in range(int(row)):
-                    row_values = file[i + 1].split(" ")
+                    row_values = list(map(int, file[i + 1].split(" ")))
                     print(row_values)
                     state.terrain_representation[i] = row_values
                 state.print_terrain()
 
         except Exception as ex:
             print(ex.__str__())
+
+    def successors(self, state):
+        return StateOperations.StateOperations(state).get_successors()
+
+
+    def goal_state(self, state):
+        a = True
+        for i in range(int(state.rows)):
+            for j in range(int(state.cols)):
+                if state.terrain_representation[i][j] != state.k:
+                    a = False
+        return a
+
+    def initial_state(self):
+        return self.state
 
 
     def write_file(self, successors):

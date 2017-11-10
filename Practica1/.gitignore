@@ -5,3 +5,4 @@ src/successors.txt
 successors.txt
 terrain_test.txt
 tests/__pycache__/
+*.pyc
