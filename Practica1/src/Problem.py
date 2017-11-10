@@ -94,13 +94,24 @@ class Problem:
         state.k = int(k)
         state.max = int(maximum)
 
+        total = state.cols * state.rows * state.k
+
+
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(int(state.cols))] for j in range(int(state.rows))]
         for i in range(int(te[2])):
             for j in range(int(te[0])):
-                ran = str(random.randint(0, int(maximum)))
-                state.terrain_representation[i][j] = ran
+                ran = random.randint(0, state.max)
+                if total - ran >= 0:
+                    total -= ran
+                    state.terrain_representation[i][j] = ran
+                else:
+                    state.terrain_representation[i][j] = 0
+                if i == state.cols  & j == state.rows & total < state.max:
+                    state.terrain_representation[i][j] = total
 
+
+        state.print_terrain()
 
     def read_file(self, state):
         try:

@@ -27,14 +27,14 @@ class Node:
 
     def create_node(self, sucessor, actual_node, strategy, max_depth):
         depth = actual_node.get_depth() + 1
-        cost=actual_node.get_cost()+sucessor[2] #sumamos el coste que produce llegar al sucesor
-        if (strategy == 'BFS'):
+        cost = actual_node.get_cost()+sucessor[2] #sumamos el coste que produce llegar al sucesor
+        if strategy == 'BFS':
             value = depth
-        elif(strategy=='DFS') or (strategy=='IT'):
-            value=max_depth-depth
-        elif(strategy=='UC'):
-            value= cost
+        elif strategy == 'DFS' or strategy == 'IT':
+            value = max_depth-depth
+        elif strategy == 'UC':
+            value = cost
 
-        new_node=Node(sucessor[1], cost, sucessor[0], value, actual_node, depth)
+        new_node = Node(sucessor[1], cost, sucessor[0], value, actual_node, depth)
         return new_node
 

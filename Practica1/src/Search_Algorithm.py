@@ -11,6 +11,7 @@ class Search_Algorithm():
         while not sol and not b.IsEmpty():
             actual_node = b.Delete()
             if prob.goal_state(actual_node.get_state()):
+                actual_node.get_state().print_terrain()
                 sol = True
             else:
                 if actual_node.get_depth()<max_depth:
