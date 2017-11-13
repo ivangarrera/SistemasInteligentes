@@ -14,7 +14,7 @@ class Border:
         return heapq.heappop(self.__queue)[1]
 
     def IsEmpty(self):
-        return len(self.__queue)==0
+        return len(self.__queue) == 0
 
 
 
