@@ -1,6 +1,6 @@
-import State
-from copy import deepcopy
 import hashlib
+from copy import deepcopy
+import State
 
 
 class StateOperations:
@@ -10,9 +10,9 @@ class StateOperations:
     # Backtracking to get all the combinations
     def __get_combinations_of_ground(self, possible_movements, ground_to_transfer, num_possible_movements,
                                      current_combination, combinations, stage):
-        if stage == num_possible_movements or ground_to_transfer == 0:
-            if ground_to_transfer == 0:
-                return
+        if stage == num_possible_movements: #or ground_to_transfer == 0:
+            #if ground_to_transfer == 0:
+                #return
             copy = current_combination[:]  # Slicing to create a new object and no overwrite
             combinations.append(copy)
         else:
@@ -46,7 +46,7 @@ class StateOperations:
                                           current_combination, combinations, 0)
         actions = self.__cartesian_prod_between_combinations_and_movements(possible_movements, combinations)
         suc = []
-        cost = 1
+        cost = ground_to_transfer+1
         for action in actions:
             x_tractor, y_tractor = action[0]
             terrain = deepcopy(self.terrain.terrain_representation)
@@ -57,7 +57,7 @@ class StateOperations:
                     new_x, new_y = movement[1]
                     # Update values
                     terrain[self.terrain.x_tractor][self.terrain.y_tractor] = self.terrain.k
-                    terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + new_excess
+                    terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + int(new_excess)
             s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, terrain)
             suc.append((action, s, cost))
         return suc
