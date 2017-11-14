@@ -81,16 +81,16 @@ class Problem:
 
 
     def generate_terrain(self, state):
-        te = input('¿ De cuanto quieres el terreno?(ZxZ)')
-        tr = input('¿Donde quieres que se coloque el tractor?(ZxZ)')
-        k = input('¿Que valor quieres que sea el ideal para cada celda?')
-        maximum = input('Cual quieres que sea el valor maximo de cada celda?')
+        terrain_measures = input("Enter terrain measures (ROW-COL)")
+        tractor_position = input("Where will be the tractor? (ROW-COL)")
+        k = input("Enter the desired amount of ground in each cell")
+        maximum = input("Enter the maximum amount of ground in each cell")
 
         # Create the terrain
-        state.cols = int(te[2])
-        state.rows = int(te[0])
-        state.x_tractor = int(tr[0])
-        state.y_tractor = int(tr[2])
+        state.cols = int(terrain_measures[2])
+        state.rows = int(terrain_measures[0])
+        state.x_tractor = int(tractor_position[0])
+        state.y_tractor = int(tractor_position[2])
         state.k = int(k)
         state.max = int(maximum)
 
@@ -99,8 +99,8 @@ class Problem:
 
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(int(state.cols))] for j in range(int(state.rows))]
-        for i in range(int(te[2])):
-            for j in range(int(te[0])):
+        for i in range(int(terrain_measures[2])):
+            for j in range(int(terrain_measures[0])):
                 ran = random.randint(0, state.max)
                 if total - ran >= 0:
                     total -= ran
@@ -145,12 +145,12 @@ class Problem:
 
 
     def goal_state(self, state):
-        a = True
+        is_goal = True
         for i in range(int(state.rows)):
             for j in range(int(state.cols)):
                 if state.terrain_representation[i][j] != state.k:
-                    a = False
-        return a
+                    is_goal = False
+        return is_goal
 
     def initial_state(self):
         return self.state
