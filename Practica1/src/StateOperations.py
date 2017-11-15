@@ -1,6 +1,5 @@
 import hashlib
 from copy import deepcopy
-
 import State
 
 
@@ -47,7 +46,7 @@ class StateOperations:
                                           current_combination, combinations, 0)
         actions = self.__cartesian_prod_between_combinations_and_movements(possible_movements, combinations)
         suc = []
-        cost = 1
+        cost = ground_to_transfer+1
         for action in actions:
             x_tractor, y_tractor = action[0]
             terrain = deepcopy(self.terrain.terrain_representation)
