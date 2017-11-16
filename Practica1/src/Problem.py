@@ -128,6 +128,7 @@ class Problem:
                 state.y_tractor = int(tractor_y)
                 state.k = int(k)
                 state.max = int(maximum)
+                state.h = 0
 
                 # Fill the terrain with values
                 state.terrain_representation = [[[] for i in range(int(state.cols))] for i in range(int(state.rows))]
@@ -135,6 +136,10 @@ class Problem:
                     row_values = list(map(int, file[i + 1].split(" ")))
                     print(row_values)
                     state.terrain_representation[i] = row_values
+                    for j in row_values:
+                        if j != state.k:
+                            state.h = state.h + 1
+                print(state.h)
                 state.print_terrain()
 
         except Exception as ex:
@@ -145,12 +150,12 @@ class Problem:
 
 
     def goal_state(self, state):
-        is_goal = True
-        for i in range(int(state.rows)):
-            for j in range(int(state.cols)):
-                if state.terrain_representation[i][j] != state.k:
-                    is_goal = False
-        return is_goal
+    #    is_goal = True
+    #    for i in range(int(state.rows)):
+    #        for j in range(int(state.cols)):
+    #            if state.terrain_representation[i][j] != state.k:
+    #                is_goal = False
+        return state.h == 0
 
     def initial_state(self):
         return self.state
