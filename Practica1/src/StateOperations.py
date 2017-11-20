@@ -50,6 +50,9 @@ class StateOperations:
         for action in actions:
             x_tractor, y_tractor = action[0]
             terrain = deepcopy(self.terrain.terrain_representation)
+            h = self.terrain.h
+            if(terrain[self.terrain.x_tractor][self.terrain.y_tractor] != self.terrain.k):
+                h = h - 1
             # Make the movement
             for movement in action[1]:
                 if movement != 0:
@@ -58,7 +61,11 @@ class StateOperations:
                     # Update values
                     terrain[self.terrain.x_tractor][self.terrain.y_tractor] = self.terrain.k
                     terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + int(new_excess)
-            s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, terrain)
+                    if(terrain[new_x][new_y] == self.terrain.k and self.terrain.terrain_representation[new_x][new_y] != self.terrain.k):
+                        h = h - 1
+                    if (terrain[new_x][new_y] != self.terrain.k and self.terrain.terrain_representation[new_x][new_y] == self.terrain.k):
+                        h= h + 1
+            s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, h, terrain)
             suc.append((action, s, cost))
         return suc
 

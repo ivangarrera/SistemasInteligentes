@@ -30,7 +30,7 @@ class Search_Algorithm():
             return None
 
     def search(self, prob, strategy, max_depth, inc_depth):
-        if (strategy != 'BFS'):
+        if (strategy != 'IT'):
             inc_depth = max_depth
         actual_depth = inc_depth
         sol = None

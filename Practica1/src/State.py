@@ -12,7 +12,7 @@ class State:
                 |---------> x
         """
 
-    def __init__(self, rows, cols, x_tractor, y_tractor, k, max, terrain_representation = 0):
+    def __init__(self, rows, cols, x_tractor, y_tractor, k, max, h, terrain_representation = 0):
         self.cols = cols
         self.rows = rows
         self.x_tractor = x_tractor
@@ -21,6 +21,7 @@ class State:
         self.max = max
         if terrain_representation != 0:
             self.terrain_representation = terrain_representation
+        self.h = h
 
 
     def print_terrain(self):

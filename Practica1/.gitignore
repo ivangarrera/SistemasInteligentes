@@ -7,3 +7,5 @@ terrain_test.txt
 tests/__pycache__/
 *.pyc
 .DS_Store
+.idea
+
