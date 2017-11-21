@@ -3,6 +3,7 @@ import Node
 
 
 class Search_Algorithm():
+
     def bounded_search(self, prob, strategy, max_depth):
         b = Border.Border()
         closed_list = []    # List needed to prune the tree
@@ -19,7 +20,7 @@ class Search_Algorithm():
                 if actual_node.get_depth() < max_depth:
                     successors_list = prob.successors(actual_node.get_state())
                     for successor in successors_list:
-                        n = actual_node.create_node(successor, actual_node, strategy, max_depth)
+                        n = actual_node.create_node(successor, actual_node, strategy, max_depth,prob)
                         # Prune the tree
                         if n.get_state().__str__() not in closed_list:
                             b.InsertNode(n)
