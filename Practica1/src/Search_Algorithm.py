@@ -21,7 +21,7 @@ class Search_Algorithm():
                     successors_list = prob.successors(actual_node.get_state())
                     for successor in successors_list:
                         n = actual_node.create_node(successor, actual_node, strategy, max_depth,prob)
-                        # Prune the tree
+                        #Prune the tree
                         if n.get_state().__str__() not in closed_list:
                             b.InsertNode(n)
                             closed_list.append(n.get_state().__str__())

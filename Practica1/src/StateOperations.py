@@ -10,9 +10,9 @@ class StateOperations:
     # Backtracking to get all the combinations
     def __get_combinations_of_ground(self, possible_movements, ground_to_transfer, num_possible_movements,
                                      current_combination, combinations, stage):
-        if stage == num_possible_movements: #or ground_to_transfer == 0:
-            #if ground_to_transfer == 0:
-                #return
+        if stage == num_possible_movements or ground_to_transfer == 0:
+            if ground_to_transfer == 0:
+                return
             copy = current_combination[:]  # Slicing to create a new object and no overwrite
             combinations.append(copy)
         else:
@@ -51,20 +51,20 @@ class StateOperations:
             x_tractor, y_tractor = action[0]
             terrain = deepcopy(self.terrain.terrain_representation)
             h = self.terrain.h
-            if(terrain[self.terrain.x_tractor][self.terrain.y_tractor] != self.terrain.k):
-                h = h - 1
             # Make the movement
             for movement in action[1]:
                 if movement != 0:
                     new_excess = movement[0]
                     new_x, new_y = movement[1]
                     # Update values
-                    terrain[self.terrain.x_tractor][self.terrain.y_tractor] = self.terrain.k
+                    terrain[self.terrain.x_tractor][self.terrain.y_tractor] = terrain[self.terrain.x_tractor][self.terrain.y_tractor] - int(new_excess)
                     terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + int(new_excess)
                     if(terrain[new_x][new_y] == self.terrain.k and self.terrain.terrain_representation[new_x][new_y] != self.terrain.k):
                         h = h - 1
                     if (terrain[new_x][new_y] != self.terrain.k and self.terrain.terrain_representation[new_x][new_y] == self.terrain.k):
-                        h= h + 1
+                        h = h + 1
+            if(terrain[self.terrain.x_tractor][self.terrain.y_tractor] == self.terrain.k):
+                h = h - 1
             s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, h, terrain)
             suc.append((action, s, cost))
         return suc
