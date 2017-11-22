@@ -154,7 +154,7 @@ class Problem:
         #for i in range(int(state.rows)):
         #    for j in range(int(state.cols)):
         #      if state.terrain_representation[i][j] != state.k:
-        #           is_goal = False
+        #          is_goal = False
         return state.h == 0
         #return is_goal
 

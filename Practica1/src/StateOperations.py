@@ -52,18 +52,23 @@ class StateOperations:
             terrain = deepcopy(self.terrain.terrain_representation)
             h = self.terrain.h
             # Make the movement
+            desigual = False
+            if (terrain[self.terrain.x_tractor][self.terrain.y_tractor] != self.terrain.k):
+                desigual = True
             for movement in action[1]:
                 if movement != 0:
                     new_excess = movement[0]
                     new_x, new_y = movement[1]
                     # Update values
                     terrain[self.terrain.x_tractor][self.terrain.y_tractor] = terrain[self.terrain.x_tractor][self.terrain.y_tractor] - int(new_excess)
+                    old_value = terrain[new_x][new_y]
                     terrain[new_x][new_y] = int(self.terrain.terrain_representation[new_x][new_y]) + int(new_excess)
-                    if(terrain[new_x][new_y] == self.terrain.k and self.terrain.terrain_representation[new_x][new_y] != self.terrain.k):
+                    new_value = terrain[new_x][new_y]
+                    if(old_value == self.terrain.k and new_value != self.terrain.k):
+                        h= h + 1
+                    elif(old_value != self.terrain.k and new_value == self.terrain.k):
                         h = h - 1
-                    if (terrain[new_x][new_y] != self.terrain.k and self.terrain.terrain_representation[new_x][new_y] == self.terrain.k):
-                        h = h + 1
-            if(terrain[self.terrain.x_tractor][self.terrain.y_tractor] == self.terrain.k):
+            if (terrain[self.terrain.x_tractor][self.terrain.y_tractor] == self.terrain.k and desigual):
                 h = h - 1
             s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k, self.terrain.max, h, terrain)
             suc.append((action, s, cost))
@@ -80,3 +85,13 @@ class StateOperations:
 
     def get_unique_representation(self):
         return hashlib.sha512(str(self.terrain).encode()).hexdigest()
+
+    def check_h(self, state):
+        h = 0
+        for i in range(int(state.rows)):
+            for j in range(int(state.cols)):
+                if state.terrain_representation[i][j] != state.k:
+                    h = h + 1
+        return h
+
+
