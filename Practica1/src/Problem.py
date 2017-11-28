@@ -12,6 +12,12 @@ class Problem:
         self.spaceState = StateOperations.StateOperations(self.state)
 
     def file_format_correct(self):
+        """
+        This method check if the format of the text file to load the program data, is correct.
+
+        :return:
+            True if the text file to load the program data is correct, False otherwise.
+        """
         correct = True
         try:
             with open(self.path) as f:
@@ -64,6 +70,12 @@ class Problem:
         self.depth_max = depth_max
 
     def choose_option(self):
+        """
+        This method contains a loop to load the user data
+
+        :return
+            None
+        """
         while True:
             choice = input('From where do you want to load the data?\n1.- From file.\n2.- Random generated.\n')
             if choice == '1':
@@ -77,16 +89,27 @@ class Problem:
                 self.generate_terrain(self.state)
                 break
             else:
-                print("'"+choice+"' is not a valid option. Please, try again.")
+                print("'" + choice + "' is not a valid option. Please, try again.")
 
 
-    def generate_terrain(self, state):
+    def generate_terrain(self):
+
+        """
+        This method generate a valid terrain randomly, with measures and values given via
+        standard input
+
+        :return:
+            None
+        """
+
         terrain_measures = input("Enter terrain measures (ROW-COL)")
         tractor_position = input("Where will be the tractor? (ROW-COL)")
         k = input("Enter the desired amount of ground in each cell")
         maximum = input("Enter the maximum amount of ground in each cell")
 
-        # Create the terrain
+        state = State.State(0, 0, 0, 0, 0, 0, 0)
+
+        # Create the initial state
         state.cols = int(terrain_measures[2])
         state.rows = int(terrain_measures[0])
         state.x_tractor = int(tractor_position[0])
@@ -98,18 +121,18 @@ class Problem:
 
 
         # Fill the terrain with values
-        state.terrain_representation = [[[] for i in range(int(state.cols))] for j in range(int(state.rows))]
-        for i in range(int(terrain_measures[2])):
-            for j in range(int(terrain_measures[0])):
+        state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
+        for i in range(state.rows):
+            for j in range(state.cols):
                 ran = random.randint(0, state.max)
                 if total - ran >= 0:
                     total -= ran
                     state.terrain_representation[i][j] = ran
                 else:
                     state.terrain_representation[i][j] = 0
-                if i == state.cols  & j == state.rows & total < state.max:
+                # This is not OK
+                if i == state.rows and j == state.cols and total < state.max:
                     state.terrain_representation[i][j] = total
-
 
         state.print_terrain()
 
@@ -131,15 +154,13 @@ class Problem:
                 state.h = 0
 
                 # Fill the terrain with values
-                state.terrain_representation = [[[] for i in range(int(state.cols))] for i in range(int(state.rows))]
-                for i in range(int(row)):
+                state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
+                for i in range(state.rows):
                     row_values = list(map(int, file[i + 1].split(" ")))
-                    print(row_values)
                     state.terrain_representation[i] = row_values
                     for j in row_values:
                         if j != state.k:
-                            state.h = state.h + 1
-                print(state.h)
+                            state.h += 1
                 state.print_terrain()
 
         except Exception as ex:
@@ -148,19 +169,11 @@ class Problem:
     def successors(self, state):
         return StateOperations.StateOperations(state).get_successors()
 
-
     def goal_state(self, state):
-        #is_goal = True
-        #for i in range(int(state.rows)):
-        #    for j in range(int(state.cols)):
-        #      if state.terrain_representation[i][j] != state.k:
-        #          is_goal = False
         return state.h == 0
-        #return is_goal
 
     def initial_state(self):
         return self.state
-
 
     def write_file(self, successors):
         try:
