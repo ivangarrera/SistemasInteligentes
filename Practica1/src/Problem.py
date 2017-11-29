@@ -69,29 +69,6 @@ class Problem:
     def set_DepthMax(self, depth_max):
         self.depth_max = depth_max
 
-    def choose_option(self):
-        """
-        This method contains a loop to load the user data
-
-        :return
-            None
-        """
-        while True:
-            choice = input('From where do you want to load the data?\n1.- From file.\n2.- Random generated.\n')
-            if choice == '1':
-                if self.file_format_correct():
-                    self.read_file(self.state)
-                    break
-                else:
-                    print("File {} has not a valid format.".format(self.path))
-                    exit(1)
-            elif choice == '2':
-                self.generate_terrain(self.state)
-                break
-            else:
-                print("'" + choice + "' is not a valid option. Please, try again.")
-
-
     def generate_terrain(self):
 
         """
@@ -119,7 +96,6 @@ class Problem:
 
         total = state.cols * state.rows * state.k
 
-
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
         for i in range(state.rows):
@@ -137,6 +113,12 @@ class Problem:
         state.print_terrain()
 
     def read_file(self, state):
+        """
+        This method is used to read an external file, with the initial state configuration.
+
+        :param state: State object reference, to fill its attributes.
+        :return: None
+        """
         try:
             with open(self.path) as f:
                 file = f.read().splitlines()
@@ -170,14 +152,28 @@ class Problem:
         return StateOperations.StateOperations(state).get_successors()
 
     def goal_state(self, state):
+        """
+        This method is used to know if a state is the goal state or not. This is calculated
+        using the heuristic.
+
+        :param state: State object used to know if this object is the goal state.
+        :return: True if the state parameter is the goal state. False otherwise.
+        """
         return state.h == 0
 
     def initial_state(self):
         return self.state
 
-    def write_file(self, successors):
+    def write_file(self, successors, path):
+        """
+        This method writes the solution of the problem into an external file.
+
+        :param successors: List with the necessaries successors to get a solution.
+        :param path: St
+        :return:
+        """
         try:
-            with open("./successors.txt", "w") as f:
+            with open(path, "w") as f:
                 f.write("Length of successors: {}\n".format(len(successors)))
                 for successor in successors:
                     f.write("{}\n".format(str(successor)))
