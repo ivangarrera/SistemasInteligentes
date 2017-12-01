@@ -26,6 +26,8 @@ class Search_Algorithm():
                             b.InsertNode(n)
                             closed_list.append(n.get_state().__str__())
         if sol:
+            print('El costo de la solución es: '+ str(actual_node.get_cost()))
+            print('La profundidad es: ' + str(actual_node.get_depth()))
             return self.create_solution(actual_node)
         else:
             return None
@@ -42,9 +44,16 @@ class Search_Algorithm():
 
     def create_solution(self, actual_node):
         action_list = []
+        node_list = []
         while actual_node != None:
+            node_list.append(actual_node)
             action_list.append(actual_node.get_action())
             actual_node = actual_node.get_parent()
+        node_list.reverse()
         action_list.reverse()
+        for node in node_list:
+            if node.get_action()!= None:
+                print(node.get_action())
+            node.get_state().print_terrain()
         action_list.pop(0)
         return action_list
