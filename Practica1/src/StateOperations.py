@@ -108,7 +108,8 @@ class StateOperations:
 
             s = State.State(self.terrain.rows, self.terrain.cols, x_tractor, y_tractor, self.terrain.k,
                             self.terrain.max, h, terrain)
-            suc.append((action, s, ground_to_transfer + 1))
+            action_with_cost= (action[0], action[1], ground_to_transfer + 1)
+            suc.append((action_with_cost, s, ground_to_transfer + 1))
         return suc
 
     def get_successors_info(self, successors):

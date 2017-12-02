@@ -39,7 +39,7 @@ class Node:
         :return:
             Node object
         """
-        state = prob.initial_state()
+        state = successor[1]
         depth = actual_node.get_depth() + 1
         cost = actual_node.get_cost() + successor[2] # add the cost to arrive the successor
 
