@@ -69,22 +69,20 @@ class Problem:
     def set_DepthMax(self, depth_max):
         self.depth_max = depth_max
 
-    def generate_terrain(self):
+    def generate_terrain(self, state):
 
         """
-        This method generate a valid terrain randomly, with measures and values given via
-        standard input
-
-        :return:
+            This method generate a valid terrain randomly, with measures and values given via
+            standard input
+            main
+            :return:
             None
-        """
+            """
 
         terrain_measures = input("Enter terrain measures (ROW-COL)")
         tractor_position = input("Where will be the tractor? (ROW-COL)")
         k = input("Enter the desired amount of ground in each cell")
         maximum = input("Enter the maximum amount of ground in each cell")
-
-        state = State.State(0, 0, 0, 0, 0, 0, 0)
 
         # Create the initial state
         state.cols = int(terrain_measures[2])
@@ -94,24 +92,49 @@ class Problem:
         state.k = int(k)
         state.max = int(maximum)
 
-        total = state.cols * state.rows * state.k
+        total = int(terrain_measures[2]) * int(terrain_measures[0]) * int(k)
 
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
         for i in range(state.rows):
             for j in range(state.cols):
-                ran = random.randint(0, state.max)
-                if total - ran >= 0:
-                    total -= ran
-                    state.terrain_representation[i][j] = ran
-                else:
-                    state.terrain_representation[i][j] = 0
-                # This is not OK
-                if i == state.rows and j == state.cols and total < state.max:
+                if i == (int(terrain_measures[0]) - 1) and j == (int(terrain_measures[2]) - 1) and total < int(maximum):
                     state.terrain_representation[i][j] = total
+                elif total < int(maximum):
+                    state.terrain_representation[i][j] = random.randint(0, total)
+                else:
+                    state.terrain_representation[i][j] = random.randint(0, state.max)
+                total -= state.terrain_representation[i][j]
+        while total != 0:
+            total = self.algoritm(total, state)
 
+        self.check(state)
         state.print_terrain()
 
+    def check(self, state):
+        for i in range(state.rows):
+            for j in range(state.cols):
+                if state.terrain_representation[i][j] != state.k:
+                    state.h += 1
+
+    def algoritm(self, total, state):
+        print("Algoritm "+str(total)+"\n")
+        for i in range(state.rows):
+            for j in range(state.cols):
+                if total == 0:
+                    break
+                elif state.terrain_representation[i][j] == 0:
+                    if total < state.max:
+                        state.terrain_representation[i][j] = random.randint(0, total)
+                    else:
+                        state.terrain_representation[i][j] = random.randint(0, state.max)
+                    total -= state.terrain_representation[i][j]
+                elif state.terrain_representation[i][j] < state.max:
+                    falta = state.max - state.terrain_representation[i][j]
+                    ran = random.randint(0, falta)
+                    state.terrain_representation[i][j] += ran
+                    total -= ran
+        return total
     def read_file(self, state):
         """
         This method is used to read an external file, with the initial state configuration.
