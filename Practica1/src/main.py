@@ -6,6 +6,15 @@ import argparse
 
 
 def main():
+    #terrain = State.State(0, 0, 0, 0, 0, 0, 0)
+    #operations = Problem.Problem(0, 0, "../terrain.txt", terrain)
+    #operations.choose_option()
+    #state_operations = StateOperations.StateOperations(terrain)
+    #sol = Search_Algorithm.Search_Algorithm().search(operations, 'BFS', 9, 17)
+    #successors = state_operations.get_successors()
+    #state_operations.get_successors_info(successors)
+    #operations.write_file(sol)
+    #print(state_operations.get_unique_representation())
     """
     Main method, where the magic is done. This method creates and initializes the original state.
     Then, applying the selected search algorithm, it calculates and it writes the correct solution.
