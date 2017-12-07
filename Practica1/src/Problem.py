@@ -42,7 +42,7 @@ class Problem:
                     correct = False
 
                 for index in range(len(file_lines) - 1):   # Config line not included
-                    values = file_lines[index + 1].split(" ")
+                    values = file_lines[index + 1][1:].split(" ")
                     if len(values) != int(config_line[4]):  # len(values) <- number of cols
                         correct = False
 
@@ -138,7 +138,7 @@ class Problem:
                 # Fill the terrain with values
                 state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
                 for i in range(state.rows):
-                    row_values = list(map(int, file[i + 1].split(" ")))
+                    row_values = list(map(int, file[i + 1][1:].split(" ")))
                     state.terrain_representation[i] = row_values
                     for j in row_values:
                         if j != state.k:

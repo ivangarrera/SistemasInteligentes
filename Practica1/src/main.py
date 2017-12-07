@@ -49,7 +49,10 @@ def main():
 
     # Search algorithm to calculate the solution
     sol = Search_Algorithm().search(operations, args.algorithm, args.depth, args.increase)
-    operations.write_file(sol, args.output)
+    if sol is None:
+        print('No se ha encontrado una solución')
+    else:
+        operations.write_file(sol, args.output)
 
 
 if __name__ == "__main__":
