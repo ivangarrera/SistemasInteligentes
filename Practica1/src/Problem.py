@@ -48,10 +48,13 @@ class Problem:
 
                     # Matrix values must be greater than 0 and values can't be greater than maximum
                     for value in values:
+                        if value == '':
+                            correct = False
                         if int(value) < 0:
                             correct = False
                         if int(value) > int(config_line[3]):  # matrix_value > maximum
                             correct = False
+
 
         except Exception as ex:
             print(ex.__str__())
