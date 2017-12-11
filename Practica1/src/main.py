@@ -39,7 +39,7 @@ def main():
     operations = Problem(0, 0, args.file, terrain)
 
     if args.random:     # Generate the terrain randomly
-        operations.generate_terrain()
+        operations.generate_terrain(terrain)
     else:
         if operations.file_format_correct():
             operations.read_file(terrain)
