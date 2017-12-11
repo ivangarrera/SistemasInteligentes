@@ -1,4 +1,5 @@
 
+import hashlib
 movements = ["UP", "DOWN", "RIGHT", "LEFT"]
 
 class State:
@@ -127,7 +128,15 @@ class State:
     def __str__(self):
         return str(self.cols)+str(self.rows)+str(self.x_tractor)+str(self.y_tractor)+str(self.k)+\
             str(self.max)+self.__get_terrain_str()
-
     __repr__ = __str__
+
+    def get_unique_representation(self):
+        """
+
+        :return:
+            String whose value is a terrain unique identifier
+        """
+        return hashlib.sha512((str(self.x_tractor)+str(self.y_tractor)+(self.__get_terrain_str())).encode()).hexdigest()
+
 
 

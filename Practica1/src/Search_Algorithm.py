@@ -27,7 +27,7 @@ class Search_Algorithm():
             if strategy == 'BFS' or strategy == 'DFS':
                 closed_list[actual_node.get_state().__str__()] = actual_node.get_cost()
             else:
-                closed_list[actual_node.get_state().__str__()] = actual_node.get_cost()
+                closed_list[actual_node.get_state().get_unique_representation()] = actual_node.get_value()
 
             if prob.goal_state(actual_node.get_state()):
                 actual_node.get_state().print_terrain()
@@ -39,20 +39,20 @@ class Search_Algorithm():
                         new_node = actual_node.create_node(successor, actual_node, strategy, max_depth,prob)
                         # Prune the tree
                         if strategy == 'BFS' or strategy == 'DFS':
-                            if new_node.get_state().__str__() not in closed_list:
+                            if new_node.get_state().get_unique_representation() not in closed_list:
                                 border.InsertNode(new_node)
-                                closed_list[new_node.get_state().__str__()] = new_node.get_cost()
+                                closed_list[new_node.get_state().get_unique_representation()] = new_node.get_cost()
                             else:
-                                if closed_list[new_node.get_state().__str__()] > new_node.get_cost():
-                                    closed_list[new_node.get_state().__str__()] = new_node.get_cost()
+                                if closed_list[new_node.get_state().get_unique_representation()] > new_node.get_cost():
+                                    closed_list[new_node.get_state().get_unique_representation()] = new_node.get_cost()
                                     border.InsertNode(new_node)
                         else:
-                            if new_node.get_state().__str__() not in closed_list:
+                            if new_node.get_state().get_unique_representation() not in closed_list:
                                 border.InsertNode(new_node)
-                                closed_list[new_node.get_state().__str__()] = new_node.get_value()
+                                closed_list[new_node.get_state().get_unique_representation] = new_node.get_value()
                             else:
-                                if closed_list[new_node.get_state().__str__()] > new_node.get_value():
-                                    closed_list[new_node.get_state().__str__()] = new_node.get_value()
+                                if closed_list[new_node.get_state().get_unique_representation()] > new_node.get_value():
+                                    closed_list[new_node.get_state().get_unique_representation()] = new_node.get_value()
                                     border.InsertNode(new_node)
 
 
