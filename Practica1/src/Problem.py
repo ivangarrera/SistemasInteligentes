@@ -75,12 +75,12 @@ class Problem:
     def generate_terrain(self,state):
 
         """
-        This method generate a valid terrain randomly, with measures and values given via
-        standard input
-
-        :return:
+            This method generate a valid terrain randomly, with measures and values given via
+            standard input
+            main
+            :return:
             None
-        """
+            """
 
         while True:
             terrain_measures = input("Enter terrain measures (ROW-COL)")
@@ -115,7 +115,7 @@ class Problem:
         state.k = int(k)
         state.max = int(maximum)
 
-        total = state.cols * state.rows * state.k
+        total = int(terrain_measures[2]) * int(terrain_measures[0]) * int(k)
 
         # Fill the terrain with values
         state.terrain_representation = [[[] for i in range(state.cols)] for j in range(state.rows)]
@@ -142,6 +142,7 @@ class Problem:
                     state.h += 1
 
     def algoritm(self, total, state):
+
         print("Algoritm " + str(total) + "\n")
 
         for i in range(state.rows):
@@ -155,7 +156,7 @@ class Problem:
                         state.terrain_representation[i][j] = random.randint(0, state.max)
                     total -= state.terrain_representation[i][j]
                 elif state.terrain_representation[i][j] < state.max:
-                    falta = state.max - state.terrain_representation[i][j]
+                    falta = state.max - state.terrain_representation[i][j] 
                     if falta <= total:
                         ran = random.randint(0, falta)
                     else:
