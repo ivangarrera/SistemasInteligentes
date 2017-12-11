@@ -72,7 +72,7 @@ class Problem:
     def set_DepthMax(self, depth_max):
         self.depth_max = depth_max
 
-    def generate_terrain(self, state):
+    def generate_terrain(self,state):
 
         """
             This method generate a valid terrain randomly, with measures and values given via
@@ -82,10 +82,30 @@ class Problem:
             None
             """
 
-        terrain_measures = input("Enter terrain measures (ROW-COL)")
-        tractor_position = input("Where will be the tractor? (ROW-COL)")
-        k = input("Enter the desired amount of ground in each cell")
-        maximum = input("Enter the maximum amount of ground in each cell")
+        while True:
+            terrain_measures = input("Enter terrain measures (ROW-COL)")
+            if terrain_measures[0].isnumeric() and terrain_measures[2].isnumeric():
+                break
+            else:
+                print("Format is not valid : " + terrain_measures)
+        while True:
+            tractor_position = input("Where will be the tractor? (ROW-COL)")
+            if tractor_position[0].isnumeric() and tractor_position[2].isnumeric():
+                break
+            else:
+                print("Format is not valid : " + tractor_position)
+        while True:
+            k = input("Enter the desired amount of ground in each cell")
+            if k.isnumeric():
+                break
+            else:
+                print("Format is not valid : " + k)
+        while True:
+            maximum = input("Enter the maximum amount of ground in each cell")
+            if maximum.isnumeric():
+                break
+            else:
+                print("Format is not valid : " + maximum)
 
         # Create the initial state
         state.cols = int(terrain_measures[2])
@@ -108,6 +128,7 @@ class Problem:
                 else:
                     state.terrain_representation[i][j] = random.randint(0, state.max)
                 total -= state.terrain_representation[i][j]
+
         while total != 0:
             total = self.algoritm(total, state)
 
@@ -121,7 +142,9 @@ class Problem:
                     state.h += 1
 
     def algoritm(self, total, state):
-        print("Algoritm "+str(total)+"\n")
+
+        print("Algoritm " + str(total) + "\n")
+
         for i in range(state.rows):
             for j in range(state.cols):
                 if total == 0:
@@ -133,11 +156,15 @@ class Problem:
                         state.terrain_representation[i][j] = random.randint(0, state.max)
                     total -= state.terrain_representation[i][j]
                 elif state.terrain_representation[i][j] < state.max:
-                    falta = state.max - state.terrain_representation[i][j]
-                    ran = random.randint(0, falta)
+                    falta = state.max - state.terrain_representation[i][j] 
+                    if falta <= total:
+                        ran = random.randint(0, falta)
+                    else:
+                        ran = random.randint(0, total)
                     state.terrain_representation[i][j] += ran
                     total -= ran
         return total
+
     def read_file(self, state):
         """
         This method is used to read an external file, with the initial state configuration.

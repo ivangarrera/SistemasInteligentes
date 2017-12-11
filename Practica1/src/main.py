@@ -35,7 +35,7 @@ def main():
                         help='File to write the solution.')
     args = parser.parse_args()
 
-    terrain = State(0, 0, 0, 0, 0, 0, 0) # Initial state. Initialized at 0.
+    terrain = State(0, 0, 0, 0, 0, 0, 0)# Initial state. Initialized at 0.
     operations = Problem(0, 0, args.file, terrain)
 
     if args.random:     # Generate the terrain randomly
